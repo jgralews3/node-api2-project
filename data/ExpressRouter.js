@@ -35,11 +35,11 @@ router.get('/api/posts/:id/comments', (req, res) => {
 //         console.log("No request body")
 //     }
     
-// 	// if (!req.body.title || !req.body.contents) {
-// 	// 	return res.status(400).json({
-// 	// 		errorMessage: "Missing title or content",
-// 	// 	})
-// 	// }
+// 	 if (!req.body.title || !req.body.contents) {
+// 	 	return res.status(400).json({
+// 		errorMessage: "Missing title or content",
+//  	})
+//      }
 //     database.insert(req.body)
 // 		.then((post) => {
 // 			return res.status(201).json(post)
@@ -51,6 +51,26 @@ router.get('/api/posts/:id/comments', (req, res) => {
 // 			})
 // 		})
 // })
+
+router.post("/api/posts/", (req, res) => {
+    if (!req.body.title || !req.body.contents) {
+      return res.status(400).json({
+        errorMessage: "Please provide title and contents for the post.",
+      });
+    } else if (req.body.title || req.body.contents) {
+      database.insert(req.body)
+        .then((post) => {
+          res.status(201).json(post);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      res.status(500).json({
+        error: "There was an error while saving the post to the database",
+      });
+    }
+  });
 
 router.delete("/api/posts/:id", (req, res) => {
 	database.remove(req.params.id)
