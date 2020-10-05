@@ -5,7 +5,7 @@ const server = express();
 const port = 5000;
 const database = require('./data/db')
 
-server.use(express());
+server.use(express.json());
 server.use(expressRouter)
 
 server.listen(port, ()=>{
